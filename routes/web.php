@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,4 +18,20 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+
+
+// Middleware personalizzato con none "admin." e prefisso url "admin/" dove ci raggruppo varie rotte
+Route::middleware(['auth', 'verified'])
+    ->name("admin.")
+    ->prefix("admin")
+    ->group(function () {
+    // rotta "/admin (all'inizio era /admin/index)" con nome "index"
+    Route::get("/", [DashboardController::class, "index"])->name("index");
+        // rotta "/admin/profile" con nome "profile"
+        Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
+    });
+
+
+
+
+require __DIR__ . '/auth.php';
