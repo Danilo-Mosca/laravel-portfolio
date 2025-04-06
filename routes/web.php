@@ -26,8 +26,8 @@ Route::middleware(['auth', 'verified'])
     ->name("admin.")
     ->prefix("admin")
     ->group(function () {
-    // rotta "/admin (all'inizio era /admin/index)" con nome "index"
-    Route::get("/", [DashboardController::class, "index"])->name("index");
+        // rotta "/admin (all'inizio era /admin/index)" con nome "index"
+        Route::get("/", [DashboardController::class, "index"])->name("index");
         // rotta "/admin/profile" con nome "profile"
         Route::get('/profile', [DashboardController::class, 'profile'])->name('profile');
     });
@@ -42,7 +42,14 @@ Route::middleware(['auth', 'verified'])
 // Laravel ci aiuta con il metodo resources() che genera per noi tutte le rotte necessarie per le nostre CRUD, che poi gestiremo con il controller PostController:
 // Route::resource('projects', PostController::class);
 
-// In questo caso voglio che l'accesso a queste rotte sia visibile solo agli utenti registrati, per fare questo aggiungo un Middleware per permettere questo:
-Route::resource('projects', ProjectController::class);
+/* In questo caso voglio rendere l'accesso alle rotte "index" (visualizzazione di tutti i progetti) e "show" (visualizzazione del singolo progetto) a tutti gli utenti, mentre le altre rotte devono essere accessibili esclusivamente agli utenti registrati:
+*/
+// Rotte pubbliche (senza middleware):
+Route::resource('projects', ProjectController::class)->only(['index', 'show']);
+// Rotte protette (con middleware auth):
+Route::resource('projects', ProjectController::class)->except(['index', 'show'])->middleware('auth', 'verified');
+
+// Il codice di seguito invece renderebbe l'accesso a tutte le rotte solo agli utenti registrati:
+// Route::resource('projects', ProjectController::class)->middleware('auth', 'verified');
 
 require __DIR__ . '/auth.php';
