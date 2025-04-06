@@ -37,9 +37,21 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Project $project)
     {
-        //
+        // Se ho come argomento la stringa dell'id: public function show(string $id)
+        // Allora posso ricavare quel singolo elemento con i seguenti modi:
+
+        // $project = Project::where('id', $id)->get();
+        // Oppure:
+        // $project = Project::where("id", $id)->first();
+        // Oppure:
+        // $project = Project::find($id);
+
+
+        // Se ho il Project come argomento (CONSIGLIATO) allora recupero direttamente quel posto così:
+        // dd($project);
+        return view('projects.show', compact('project'));
     }
 
     /**
