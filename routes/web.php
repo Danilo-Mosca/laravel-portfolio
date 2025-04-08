@@ -42,14 +42,15 @@ Route::middleware(['auth', 'verified'])
 // Laravel ci aiuta con il metodo resources() che genera per noi tutte le rotte necessarie per le nostre CRUD, che poi gestiremo con il controller PostController:
 // Route::resource('projects', PostController::class);
 
-/* In questo caso voglio rendere l'accesso alle rotte "index" (visualizzazione di tutti i progetti) e "show" (visualizzazione del singolo progetto) a tutti gli utenti, mentre le altre rotte devono essere accessibili esclusivamente agli utenti registrati:
+// In questo caso voglio rendere l'accesso a tutte le rotte di "projects" solo agli utenti registrati:
+Route::resource('projects', ProjectController::class)->middleware('auth', 'verified');
+
+/* Mentre se volessi rendere pubblico a tutti gli utenti l'accesso sotanto alle rotte "index" (visualizzazione di tutti i progetti) e "show" (visualizzazione del singolo progetto) di "projects", mentre le altre rotte devono essere accessibili esclusivamente agli utenti registrati avrei dovuto inserire le seguenti direttive:
 */
 // Rotte pubbliche (senza middleware):
-Route::resource('projects', ProjectController::class)->only(['index', 'show']);
+// Route::resource('projects', ProjectController::class)->only(['index', 'show']);
 // Rotte protette (con middleware auth):
-Route::resource('projects', ProjectController::class)->except(['index', 'show'])->middleware('auth', 'verified');
+// Route::resource('projects', ProjectController::class)->except(['index', 'show'])->middleware('auth', 'verified');
 
-// Il codice di seguito invece renderebbe l'accesso a tutte le rotte solo agli utenti registrati:
-// Route::resource('projects', ProjectController::class)->middleware('auth', 'verified');
 
 require __DIR__ . '/auth.php';
