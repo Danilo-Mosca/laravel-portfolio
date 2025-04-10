@@ -12,10 +12,15 @@
 </head>
 <body>
 
-    <div class="container">
+    {{-- Includo il "partials" dell'header con la barra di navigazione: --}}
+    @include('partials.header')
+
+    <div class="container body-content">
         @yield('content')
     </div>
 
+        {{-- Includo il "partials" footer con la barra di navigazione: --}}
+    @include('partials.footer')
 </body>
 
 </html>

@@ -7,28 +7,30 @@
 @section('content')
     {{-- @dd($projects); --}}
 
+    <section class="custom-card pt-5 pb-5">
 
-    <table>
-        <th>Nome</th>
-        <th>Cliente</th>
-        <th>Data inizio progetto</th>
-        <th>Data fine progetto</th>
-        <th>Visualizza progetto</th>
+        <div class="container text-center">
+            <div class="row pb-3 pe-3">
+                <div class="col-3 col-md-3 text-uppercase">Nome</div>
+                <div class="col-3 col-md-3 text-uppercase">Cliente</div>
+                <div class="col-3 col-md-2 text-uppercase">Data inizio progetto</div>
+                <div class="col-3 col-md-2 text-uppercase">Data fine progetto</div>
+                {{-- Con .d-none .d-sm-block nascondo la colonna solo su xs --}}
+                <div class="col-md-2 text-uppercase d-none d-sm-block">Visualizza progetto</div>
+            </div>
+        </div>
 
         @foreach ($projects as $project)
-            <tr>
-                <td>{{ $project->name }}</td>
-                <td>{{ $project->client }}</td>
-                {{-- Posso richiamarli anche così: --}}
-                <td>{{ $project['start_date'] }}</td>
-                <td>{{ $project['end_date'] }}</td>
-                {{-- <td>{{$project['summary']}}</td> --}}
-
-                {{-- al metodo route() che restituisce l'indirizzo dell'url gli passo anche il parametro $project così da reindirizzare su quello specifico id, esempio: http://127.0.0.1:8000/projects/10  <---- 10 è il $project passatogli --}}
-                {{-- avrei potuto inserire anche l'id:
-                    <a href="{{ route('projects.show', $project->id) }}">Visualizza il project</a> --}}
-                <td><a href="{{ route('projects.show', $project) }}">Visualizza</a></td>
-            </tr>
+            {{-- Inserendo i tag <x-nome_componente>...</x-nome_componente> inserisco un componente, in questo caso inserisco il componente card (<x-card> </x-card>): --}}
+            <x-card>
+                <x-slot:name>{{ $project->name }}</x-slot:name>
+                <x-slot:client>{{ $project->client }}</x-slot:client>
+                <x-slot:start_date>{{ $project->start_date }}</x-slot:start_date>
+                <x-slot:end_date>{{ $project->end_date }}</x-slot:end_date>
+                <x-slot:id>{{ $project->id }} </x-slot:id>
+            </x-card>
         @endforeach
-    </table>
+
+    </section>
+
 @endsection

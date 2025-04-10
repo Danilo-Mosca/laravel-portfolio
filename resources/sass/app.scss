@@ -6,3 +6,58 @@
 
 // Bootstrap
 @import 'bootstrap/scss/bootstrap';
+
+// CSS personalizzato generico
+
+/* variabili di root */
+:root {
+    --header-footer-backgroud: #344C36;
+    --strip-and-text: #FAAD1B;
+    --cards-content: #F5F5F5;
+}
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Nunito', sans-serif;
+    font-weight: bold;
+}
+
+/* Classe di debug */
+.debug {
+    // border: 1px solid var(--prova1);
+    border: 1px solid red;
+}
+
+/* Classe fluida per le immagini */
+img {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    object-fit: cover;
+}
+
+.body-content {
+    min-height: 80vh;
+}
+
+/* ---------- CSS card personalizzata ---------- */
+
+// Container della card:
+.custom-card{
+    background-color: var(--cards-content);
+    color: var(--header-footer-backgroud);
+    border-radius: 20px;
+    // box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+// colonna link alla singola pagina della card:
+.title-link {
+    color: #d3a92a;
+}
+.title-link:hover {
+    color: var(--strip-and-text);
+}
