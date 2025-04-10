@@ -3,7 +3,7 @@
       anche il file "footer.scss" (nella cartella "partials") che contiene il CSS specifico per l'footer: --}}
  @vite(['resources/sass/app.scss', 'resources/sass/partials/footer.scss', 'resources/js/app.js'])
 
- <div class="customize">
+ <div>
      <footer>
          <div class="container">
              <p class="line-height-footer">Footer del Portfolio</p>

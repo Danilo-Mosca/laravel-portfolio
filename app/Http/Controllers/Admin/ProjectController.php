@@ -23,7 +23,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('projects.create');
     }
 
     /**
@@ -31,7 +31,37 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request);
+        $newProject = new Project();
+
+        /*
+        METODO ALTERNATIVO SE L'ARGOMENTO E' PASSATO CON:   public function store(Request $request)
+
+        $newProject->name = $request['name'];
+        $newProject->client = $request['client'];
+        $newProject->type = $request['type'];
+        // Oppure anche così:
+        $newProject->start_date = $request->start_date;
+        $newProject->end_date = $request->end_date;
+        $newProject->summary = $request->summary;
+
+        $newProject->save();    //salvo i nuovi dati nella tabella projects del database
+        */
+
+        $data = $request->all();    //assegno alla variabile $data tutti i valori inseriti nel form
+        // dd($data);
+        $newProject->name = $data['name'];
+        $newProject->client = $data['client'];
+        $newProject->type = $data['type'];
+        $newProject->start_date = $data['start_date'];
+        $newProject->end_date = $data['end_date'];
+        $newProject->summary = $data['summary'];
+        // dd($newProject);
+
+        $newProject->save();    //salvo i nuovi dati nella tabella projects del database
+
+        // Reindirizzo l'utente alla pagina show per vedere il projects che ha salvato ($newPost->id è equivalente a $newPost))
+        return redirect()->route("projects.show", $newProject);
     }
 
     /**
