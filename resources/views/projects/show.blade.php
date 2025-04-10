@@ -11,6 +11,8 @@
 
         <section class="mt-3">
             <h3>{{ $project->client }}</h3>
+
+            <h4>Tipologia: "{{ $project->type }}"</h4>
             <p>
                 {{ $project->summary }}
             </p>
