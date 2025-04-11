@@ -7,6 +7,16 @@
 @section('content')
     {{-- @dd($projects); --}}
 
+
+
+    {{-- --------------- Sezione pulsante aggiungi un progetto --------------- --}}
+    <div class="d-flex py-4 gap-2">
+        <a class="btn btn-outline-success" href="{{ route('projects.create') }}">Aggiungi un progetto</a>
+    </div>
+    {{-- --------------- Fine sezione pulsante aggiungi un progetto --------------- --}}
+
+
+
     <section class="custom-card pt-5 pb-5">
 
         <div class="container text-center">

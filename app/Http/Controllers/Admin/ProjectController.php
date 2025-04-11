@@ -87,24 +87,72 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Project $project)
     {
-        //
+        // dd($id);
+
+        // Alternativa se come argomento del metodo avessi passato:  public function edit(string $id)
+        // Così:
+        // $project = Project::where("id", $id)->get();
+        // Oppure in questo modo:
+        // $project = Project::find($id);
+        // dd($project);
+
+        return view("projects.edit", compact("project"));
+        // Se invece non avessi voluto usare la funzione compact avrei dovuto passare i parametri così:
+        // return view("projects.edit", ['project' => $project]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Project $project)
     {
-        //
+        // dd($request);
+
+        // Prima prendiamo le richieste e le salviamo su un array letterale:
+        $data = $request->all();
+
+
+        $project->name = $data['name'];
+        $project->client = $data['client'];
+        $project->type = $data['type'];
+        $project->start_date = $data['start_date'];
+        $project->end_date = $data['end_date'];
+        $project->summary = $data['summary'];
+        $project->update();     //aggiorno il progetto nel database
+
+        /*
+            ANCHE QUI AVREI POTUTO UTILIZZARE:
+            public function update(Request $request, string $id)
+            {
+            Modifichiamo le informazioni contenute nel post:
+            $project = new Project();
+            $project->name = $data['name'];
+            $project->client = $data['client'];
+            $project->type = $data['type'];
+            $project->start_date = $data['start_date'];
+            $project->end_date = $data['end_date'];
+            $project->summary = $data['summary'];
+            $project->update();     //aggiorno il progetto nel database
+            }
+        */
+
+
+        // Reindirizzo l'utente alla pagina show per vedere il progetto che ha modificato ($project->id è equivalente a $project))
+        return redirect()->route("projects.show", $project);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Project $project)
     {
-        //
+        // dd($id);
+
+        $project->delete();    //cancello il progetto
+
+        // Reindirizzo l'utente alla pagina index che restituisce tutti i $project contenuti nella tabella $projects 
+        return redirect()->route('projects.index');
     }
 }

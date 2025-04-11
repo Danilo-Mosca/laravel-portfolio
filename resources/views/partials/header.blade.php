@@ -7,7 +7,7 @@
 
      <nav class="navbar navbar-expand-lg bg-body-tertiary">
          <div class="container p-2">
-             <a class="navbar-brand" href="#">
+             <a class="navbar-brand" href="{{ route('projects.index') }}">
                  <img src="{{ Vite::asset('resources/img/logo_portfolio.png') }}" alt="Logo" width="30"
                      height="24" class="d-inline-block align-text-top">
              </a>
