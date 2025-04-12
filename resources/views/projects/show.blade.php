@@ -27,8 +27,8 @@
         <section class="mt-3">
             <h3>{{ $project->client }}</h3>
 
-            <h4>Tipologia: "{{ $project->type }}"</h4>
-            <p>
+            <h4 class="mt-3">Tipologia: <em>{{ $project->type->name }}</em></h4>
+            <p class="mt-3">
                 {{ $project->summary }}
             </p>
         </section>
@@ -36,7 +36,7 @@
     </section>
 
 
-    
+
     <!-- Modale richiamato dal pulsante "Elimina" -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">

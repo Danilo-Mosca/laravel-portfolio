@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -23,7 +24,11 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('projects.create');
+        // recupero tutti i types dalla sua tabella:
+        $types = Type::all();
+        return view('projects.create', compact('types'));
+        // potevo scriverlo anche così:
+        // return view('projects.create', ['types' => $types]);
     }
 
     /**
@@ -39,7 +44,7 @@ class ProjectController extends Controller
 
         $newProject->name = $request['name'];
         $newProject->client = $request['client'];
-        $newProject->type = $request['type'];
+        $newProject->type_id = $request['type_id'];
         // Oppure anche così:
         $newProject->start_date = $request->start_date;
         $newProject->end_date = $request->end_date;
@@ -52,7 +57,7 @@ class ProjectController extends Controller
         // dd($data);
         $newProject->name = $data['name'];
         $newProject->client = $data['client'];
-        $newProject->type = $data['type'];
+        $newProject->type_id = $data['type_id'];
         $newProject->start_date = $data['start_date'];
         $newProject->end_date = $data['end_date'];
         $newProject->summary = $data['summary'];
@@ -98,9 +103,14 @@ class ProjectController extends Controller
         // $project = Project::find($id);
         // dd($project);
 
-        return view("projects.edit", compact("project"));
+
+        // recupero tutti i types dalla sua tabella:
+        $types = Type::all();
+
+        return view("projects.edit", compact("project", "types"));
         // Se invece non avessi voluto usare la funzione compact avrei dovuto passare i parametri così:
         // return view("projects.edit", ['project' => $project]);
+        // return view('posts.edit', ['project'=> $project, "types" => $types]);
     }
 
     /**
@@ -116,7 +126,7 @@ class ProjectController extends Controller
 
         $project->name = $data['name'];
         $project->client = $data['client'];
-        $project->type = $data['type'];
+        $project->type_id = $data['type_id'];
         $project->start_date = $data['start_date'];
         $project->end_date = $data['end_date'];
         $project->summary = $data['summary'];
@@ -130,7 +140,7 @@ class ProjectController extends Controller
             $project = new Project();
             $project->name = $data['name'];
             $project->client = $data['client'];
-            $project->type = $data['type'];
+            $project->type_id = $data['type_id'];
             $project->start_date = $data['start_date'];
             $project->end_date = $data['end_date'];
             $project->summary = $data['summary'];

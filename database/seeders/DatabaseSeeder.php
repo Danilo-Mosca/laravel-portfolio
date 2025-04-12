@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         // Eseguiamo il seeder ProjectsTableSeeder:
-        $this->call([ProjectsTableSeeder::class]);
+        $this->call([
+            TypesSeeder::class,
+            ProjectsTableSeeder::class
+        ]);
     }
 }

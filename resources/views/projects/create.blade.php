@@ -19,8 +19,13 @@
         </div>
 
         <div class="form-control mb-3 d-flex flex-column">
-            <label for="type">Tipologia progetto:</label>
-            <input type="text" name="type" id="type">
+            <label for="type_id">Tipologia progetto:</label>
+            <select name="type_id" id="type_id">
+                @foreach ($types as $type)
+                    {{-- Visualizzo il name del type, ma come valore gli passo l'id, perchè è questo che andremo ad inserire nella colonna "type_id" della tabella "projects" --}}
+                    <option value="{{ $type->id }}">{{ $type->name }}</option>
+                @endforeach
+            </select>
         </div>
 
         <div class="form-control mb-3 d-flex flex-column">

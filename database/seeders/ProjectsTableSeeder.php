@@ -22,7 +22,8 @@ class ProjectsTableSeeder extends Seeder
 
             $newProject->name = $faker->sentence(3);     // Genera una frase contenente una data quantità di parole. Di default 6, in questo caso 3
             $newProject->client = $faker->company();     // Potrei inserire anche name() al posto di company()
-            $newProject->type = $faker->word();          // Genera una parola, che verrà utilizzata come type del progetto
+            $newProject->type_id = rand(1,5);            // Genera un numero a caso compreso tra 1 e 5
+            // $newProject->type = $faker->word();          // Genera una parola, che verrà utilizzata come type del progetto
             $newProject->start_date = $faker->dateTimeBetween('-2 years', '-3 weeks');  // Per la data di inizio progetto richiedo di inserire una data compresa tra 2 anni fa fino a 3 settimane fa
         
             // Assegno la data ad una variabile per evitare poi che la data della fine del progetto sia antecedente a quella di inizio progetto:
