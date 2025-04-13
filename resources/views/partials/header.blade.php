@@ -23,13 +23,19 @@
                      {{-- Per rendere dinamica la classe active sui pulsanti del menu è possibile utilizzare l'helper:
                     Route::is() o request()->routeIs() direttamente dentro i tag blade. Ecco l'esempio: --}}
                      <a class="nav-link {{ request()->routeIs('projects.index') ? 'active' : '' }}" aria-current="page"
-                         href="{{ route('projects.index') }}">Home</a>
+                         href="{{ route('projects.index') }}">Progetti</a>
                      {{-- Nell'esempio verifico se la rotta in cui siamo attualmente è "projects.index" o no, in caso lo sia allora con l'operatore ternario visualizzo la classe active, altrimenti la nascondo. L'esempio di sopra può essere fatto anche richiamando il metodo statico is() nella classe "facace" Route, come di seguito: --}}
                      {{-- {{ Route::is('projects.index') ? 'active' : '' }} --}}
 
                      <a class="nav-link {{ request()->routeIs('projects.create') ? 'active' : '' }}"
-                         href="{{ route('projects.create') }}">Create Projects</a>
-                     <a class="nav-link" href="#">Pricing</a>
+                         href="{{ route('projects.create') }}">Inserisci un progetto</a>
+
+                     <a class="nav-link {{ request()->routeIs('types.index') ? 'active' : '' }}"
+                         href="{{ route('types.index') }}">Tipi di progetto</a>
+
+                     <a class="nav-link {{ request()->routeIs('types.create') ? 'active' : '' }}"
+                         href="{{ route('types.create') }}">Inserisci un tipo di progetto</a>
+
                      <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                  </div>
              </div>

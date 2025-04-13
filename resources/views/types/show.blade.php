@@ -1,12 +1,12 @@
 @extends('layouts.projects')
 
-@section('title', "Project: $project->name")
+@section('title', "$type->name")
 
 @section('content')
 
     {{-- --------------- Sezione pulsanti modifica ed elimina --------------- --}}
     <div class="d-flex py-4 gap-2">
-        <a class="btn btn-outline-warning" href="{{ route('projects.edit', $project) }}">Modifica</a>
+        <a class="btn btn-outline-warning" href="{{ route('types.edit', $type) }}">Modifica</a>
 
         {{-- Per il DELETE non possiamo usare un link perchè i link chiamano sempre un metodo get, questo invece deve essere un metodo delete, allora lo facciamo tramite un form nascosto nel pulsante di conferma: --}}
 
@@ -18,20 +18,23 @@
     {{-- --------------- Fine sezione pulsanti modifica ed elimina --------------- --}}
 
 
+    {{-- ---------- Sessione temporanea che mostra una notifica, un alert con un messaggio di errore nel caso si stesse provando a cancellare il type di default, cioè quello con id 1 ----------  --}}
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    {{-- ---------- Fine sessione temporanea che mostra una notifica, un alert con un messaggio di errore nel caso si stesse provando a cancellare il type di default, cioè quello con id 1 ----------  --}}
 
+    
+    
     <section class="custom-card p-3">
-        <h2 class="mt-2">{{ $project->name }}</h2>
+        <h2 class="mt-2">{{ $type->name }}</h2>
 
-        <small>Inizio lavori progetto: {{ $project->start_date }}</small> - <small>Termine lavori progetto: {{ $project->end_date }}</small>
-
-        <section class="mt-3">
-            <h3>{{ $project->client }}</h3>
-
-            <h4 class="mt-3">Tipologia: <em>{{ $project->type->name }}</em></h4>
-            <p class="mt-3">
-                {{ $project->summary }}
-            </p>
-        </section>
+        <p class="mt-3">
+            {{ $type->description }}
+        </p>
+    </section>
 
     </section>
 
@@ -46,12 +49,12 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Vuoi eliminare il progetto?
+                    Vuoi davvero eliminare il tipo di progetto?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
                     {{-- Per il DELETE non possiamo usare un link perchè i link chiamano sempre un metodo get, questo invece deve essere un metodo delete, allora lo facciamo tramite un form nascosto nel pulsante di conferma: --}}
-                    <form action="{{ route('projects.destroy', $project) }}" method="POST">
+                    <form action="{{ route('types.destroy', $type) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <input type="submit" class="btn btn-outline-danger" value="Elimina">

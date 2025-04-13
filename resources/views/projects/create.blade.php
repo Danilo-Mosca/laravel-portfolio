@@ -30,12 +30,12 @@
 
         <div class="form-control mb-3 d-flex flex-column">
             <label for="start_date">Inizio dei lavori:</label>
-            <input type="text" name="start_date" id="start_date">
+            <input type="date" id="start_date" name="start_date">
         </div>
 
         <div class="form-control mb-3 d-flex flex-column">
             <label for="end_date">Termine dei lavori:</label>
-            <input type="text" name="end_date" id="end_date">
+            <input type="date" id="end_date" name="end_date">
         </div>
 
         <div class="form-control mb-3 d-flex flex-column">

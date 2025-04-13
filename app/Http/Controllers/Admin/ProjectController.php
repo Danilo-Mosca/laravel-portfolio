@@ -40,7 +40,7 @@ class ProjectController extends Controller
         $newProject = new Project();
 
         /*
-        METODO ALTERNATIVO SE L'ARGOMENTO E' PASSATO CON:   public function store(Request $request)
+        METODO ALTERNATIVO:
 
         $newProject->name = $request['name'];
         $newProject->client = $request['client'];
@@ -53,6 +53,7 @@ class ProjectController extends Controller
         $newProject->save();    //salvo i nuovi dati nella tabella projects del database
         */
 
+        // Assegno alla variabile $data tutti i valori ricevuto dal form
         $data = $request->all();    //assegno alla variabile $data tutti i valori inseriti nel form
         // dd($data);
         $newProject->name = $data['name'];
@@ -137,13 +138,13 @@ class ProjectController extends Controller
             public function update(Request $request, string $id)
             {
             Modifichiamo le informazioni contenute nel post:
-            $project = new Project();
-            $project->name = $data['name'];
-            $project->client = $data['client'];
-            $project->type_id = $data['type_id'];
-            $project->start_date = $data['start_date'];
-            $project->end_date = $data['end_date'];
-            $project->summary = $data['summary'];
+            $project = Project::find($id);
+            $project->name = $request['name'];
+            $project->client = $request['client'];
+            $project->type_id = $request['type_id'];
+            $project->start_date = $request['start_date'];
+            $project->end_date = $request['end_date'];
+            $project->summary = $request['summary'];
             $project->update();     //aggiorno il progetto nel database
             }
         */
@@ -162,7 +163,7 @@ class ProjectController extends Controller
 
         $project->delete();    //cancello il progetto
 
-        // Reindirizzo l'utente alla pagina index che restituisce tutti i $project contenuti nella tabella $projects 
-        return redirect()->route('projects.index');
+        // Reindirizzo l'utente alla pagina index che restituisce tutti i $project contenuti nella tabella $projects. Oltre a reindirizzarli nella index, tramite il metodo width() passo anche un dato alla sessione temporanea di tipo "success" con un messaggio "flash" specificato
+        return redirect()->route('projects.index')->with('success', 'Progetto cancellato con successo');
     }
 }

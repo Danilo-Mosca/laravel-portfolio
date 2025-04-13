@@ -21,6 +21,10 @@ class TypesSeeder extends Seeder
         // Creo un array contenente le tipologie dei progetti e una breve descrizione per ciascuno:
         $types = [
             [
+                'name' => "Tipologia non definita",
+                'description' => "Tipologia di default per i progetti che non hanno una chiara e definita tipologia"
+            ],
+            [
                 'name' => "Sito vetrina / Portfolio",
                 'description' => "Un sito semplice per presentare un’azienda, un professionista o un artista. Include sezioni come “Chi siamo”, “Servizi”, “Contatti” e magari un modulo di contatto."
             ],

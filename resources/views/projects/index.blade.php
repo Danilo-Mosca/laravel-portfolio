@@ -17,6 +17,16 @@
 
 
 
+    {{-- ---------- Sessione temporanea che mostra una notifica, un alert con un messaggio di successo nel caso in cui il type viene cancellato con successo ----------  --}}
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    {{-- ---------- Fine sessione temporanea che mostra una notifica, un alert con un messaggio di successo nel caso in cui il type viene cancellato con successo ----------  --}}
+
+
+
     <section class="custom-card pt-5 pb-5">
 
         <div class="container text-center">

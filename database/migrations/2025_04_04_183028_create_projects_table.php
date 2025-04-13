@@ -16,9 +16,9 @@ return new class extends Migration
 
             $table->string("name", 40);                 //colonna che conterrà il nome del progetto
             $table->string("client", 40)->nullable();   //colonna che conterrà il cliente, può essere anche null
-            $table->date("start_date");             //colonna che conterrà la data di inizio del progetto
-            $table->date("end_date");               //colonna che conterrà la data di fine progetto
-            $table->longText("summary");            //colonna che conterrà un riassunto del progetto, gli do un longText perchè il contenuto dele post deve contenere una stringa con molti caratteri
+            $table->date("start_date");              //colonna che conterrà la data di inizio del progetto
+            $table->date("end_date");                //colonna che conterrà la data di fine progetto
+            $table->longText("summary")->nullable(); //colonna che conterrà un riassunto del progetto, gli do un longText perchè il contenuto dele post deve contenere una stringa con molti caratteri
 
             $table->timestamps();
         });

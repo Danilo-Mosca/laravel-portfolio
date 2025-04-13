@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,5 +53,10 @@ Route::resource('projects', ProjectController::class)->middleware('auth', 'verif
 // Rotte protette (con middleware auth):
 // Route::resource('projects', ProjectController::class)->except(['index', 'show'])->middleware('auth', 'verified');
 
+
+
+
+// Anche qui voglio rendenre privato l'accesso a tutte le rotte di "type" (per aggiungere, modificare e cancellare i tipi di progetto) solo agli utenti registrati:
+Route::resource('types', TypeController::class)->middleware('auth', 'verified');
 
 require __DIR__ . '/auth.php';
