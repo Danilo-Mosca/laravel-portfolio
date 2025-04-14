@@ -13,17 +13,17 @@
 
         <div class="form-control mb-3 d-flex flex-column">
             <label for="name">Nome:</label>
-            <input type="text" name="name" id="name" value="{{ $project->name }}">
+            <input type="text" name="name" id="name" value="{{ $project->name }}" required>
         </div>
 
         <div class="form-control mb-3 d-flex flex-column">
             <label for="client">Cliente:</label>
-            <input type="text" name="client" id="client" value="{{ $project->client }}">
+            <input type="text" name="client" id="client" value="{{ $project->client }}" required>
         </div>
 
         <div class="form-control mb-3 d-flex flex-column">
             <label for="type_id">Tipologia progetto:</label>
-            <select name="type_id" id="type_id">
+            <select name="type_id" id="type_id" required>
                 @foreach ($types as $type)
                     {{-- Visualizzo il name del type, ma come valore gli passo l'id, perchè è questo che andremo ad inserire nella colonna "type_id" della tabella "projects" --}}
                     <option value="{{ $type->id }}" {{ $type->id == $project->type_id ? 'selected' : '' }}>
@@ -32,14 +32,28 @@
             </select>
         </div>
 
+        {{-- technologies utilizzate --}}
+        <div class="form-control mb-3 d-flex flex-wrap">
+            @foreach ($technologies as $technology)
+                <div class="technology me-3">
+                    <input type="checkbox" name="tecnologie[]" id="technology-{{ $technology->id }}"
+                        value="{{ $technology->id }}"
+                        {{ $project->technologies->contains($technology->id) ? 'checked' : '' }}>
+                    {{-- Nella riga di sopra verifico con l'operatore ternario se quel valore è presente, se così lo spunto come checked: --}}
+                    <label for="technology-{{ $technology->id }}">{{ $technology->name }}</label>
+                </div>
+            @endforeach
+        </div>
+        {{-- end technologies utilizzate --}}
+
         <div class="form-control mb-3 d-flex flex-column">
             <label for="start_date">Inizio dei lavori:</label>
-            <input type="date" id="start_date" name="start_date" value="{{ $project->start_date }}">
+            <input type="date" id="start_date" name="start_date" value="{{ $project->start_date }}" required>
         </div>
 
         <div class="form-control mb-3 d-flex flex-column">
             <label for="end_date">Termine dei lavori:</label>
-            <input type="date" id="end_date" name="end_date" value="{{ $project->end_date }}">
+            <input type="date" id="end_date" name="end_date" value="{{ $project->end_date }}" required>
         </div>
 
         <div class="form-control mb-3 d-flex flex-column">

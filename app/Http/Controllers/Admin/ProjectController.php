@@ -79,7 +79,7 @@ class ProjectController extends Controller
         // PRIMA CONTROLLO SE E' STATO EFFETTIVAMENTE PASSATO QUALCHE VALORE DI TECNOLOGIA E CHE QUINDI L'ARRAY ESISTA:
         // Avrei potuto inserire anche la seguente condizione: if(isset($data['tecnologie']))
         if ($request->has('tecnologie')) {
-            // salvo i dati nella tabella Ponte che ha relazione molti a molti tra le tabelle projects e technologies:
+            // sel l'array esiste, e quindi li stiamo ricevendo, salvo i dati nella tabella Ponte che ha relazione molti a molti tra le tabelle projects e technologies:
             $newProject->technologies()->attach($data['tecnologie']);   //richiamo il metodo technologies() creato nel Model di Project che crea la relazione molti a molti e con il metodo attach() gli passo l'array dei tags ricevuti dalla request
         }
 
@@ -126,11 +126,13 @@ class ProjectController extends Controller
 
         // recupero tutti i types dalla sua tabella:
         $types = Type::all();
+        // Prendo tutte le tecnologie della tabella technologies:
+        $technologies = Technology::all();
 
-        return view("projects.edit", compact("project", "types"));
+        return view("projects.edit", compact("project", "types", "technologies"));
         // Se invece non avessi voluto usare la funzione compact avrei dovuto passare i parametri così:
         // return view("projects.edit", ['project' => $project]);
-        // return view('posts.edit', ['project'=> $project, "types" => $types]);
+        // return view('posts.edit', ['project'=> $project, "types" => $types, "technologies" => $technologies]);
     }
 
     /**
@@ -169,6 +171,24 @@ class ProjectController extends Controller
         */
 
 
+
+        /* COME PER IL CREATE NELLO STORE, DOPO AVER AGGIORNATO IL POST, E SOLTANTO DOPO PERCHE' A NOI CI SERVE IL DATO DEL POST SALVATO */
+
+        // Prima di tutto verifichiamo se stiamo ricevendo le technologies con il metodo has() che determina se una request contiene la chiave che gli abbiamo passato, che in questo caso sarà "tecnologie". Allo stesso tempo potrei anche verificare l'esistenza dell'array "tecnologie" con la seguente condizione: isset($data['items'])
+        if ($request->has('tecnologie')) {
+            // se l'array items esiste e quindi li stiamo ricevendo, allora sincornizziamo le technologies della tabella pivot:
+            $project->technologies()->sync($data['tecnologie']);
+        } else {
+            // se non riceviamo dei valori di technologies, allora eliminiamo tutti quelli collegati al project attuale dalla tabella ponte con il metodo detach():
+            $project->technologies()->detach();
+        }
+
+        // Avrei potuto scrivere anche nei seguenti modi e non mi sarebbe servita nemmeno la verifica se stiamo ricevendo i valori di technologies:
+        // $project->technologies()->sync($request->tecnologie);
+        // $project->technologies()->sync($request['tecnologie']);
+
+
+        
         // Reindirizzo l'utente alla pagina show per vedere il progetto che ha modificato ($project->id è equivalente a $project))
         return redirect()->route("projects.show", $project);
     }
@@ -179,6 +199,9 @@ class ProjectController extends Controller
     public function destroy(Project $project)
     {
         // dd($id);
+
+        //PRIMA DI TUTTO eliminiamo tutte le TECNOLOGIE (se presenti) collegati al progetto attuale (che vogliamo eliminare) dalla tabella ponte, in caso contrario riceveremmo un errore e non riusciremmo a cancellare il record, perchè ha le key associate alla tabella ponte "project_technology" e ho bisogno di eliminare prima quelle con il metodo detach():
+        $project->technologies()->detach();    // eliminiamo tutti i valori di technologies dalla tabella ponte collegati al progetto da eliminare
 
         $project->delete();    //cancello il progetto
 
