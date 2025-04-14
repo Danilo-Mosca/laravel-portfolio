@@ -22,7 +22,8 @@
     <section class="custom-card p-3">
         <h2 class="mt-2">{{ $project->name }}</h2>
 
-        <small>Inizio lavori progetto: {{ $project->start_date }}</small> - <small>Termine lavori progetto: {{ $project->end_date }}</small>
+        <small>Inizio lavori progetto: {{ $project->start_date }}</small> - <small>Termine lavori progetto:
+            {{ $project->end_date }}</small>
 
         <section class="mt-3">
             <h3>{{ $project->client }}</h3>
@@ -32,6 +33,21 @@
                 {{ $project->summary }}
             </p>
         </section>
+
+
+
+        {{-- Visualizzo le tecnologie associate a questo progetto: --}}
+        <p>
+            Tecnologie:
+            {{-- USO IL forelse() che è un ciclo che se è vuoto, cioè non contiene nessun elemento allora mi restituisce un valore nell'@empty altrimenti me lo esegue normalmente con le istruzioni al suo interno: --}}
+            @forelse ($project->technologies as $technology)
+                <span class="badge" style="background-color: {{ $technology->color }}">{{ $technology->name }}</span>
+                {{-- Potevo inserirlo anche così: {{ $technology['color'] }} e {{ $technology['name'] }} --}}
+            @empty
+                Nessuna tecnologia utilizzata
+            @endforelse
+        </p>
+        {{-- End visualizzazione tecnologie associate a questo progetto: --}}
 
     </section>
 

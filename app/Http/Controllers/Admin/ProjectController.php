@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Technology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 
@@ -14,6 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        // Prendo tutti i progetti:
         $projects = Project::all();     // Uso il metodo statica all() dal Model Project per restituire a $projects tutti i dati contenuti nella tabella projects del database laravel-portfolio
 
         return view('projects.index', compact('projects'));
@@ -26,9 +28,13 @@ class ProjectController extends Controller
     {
         // recupero tutti i types dalla sua tabella:
         $types = Type::all();
-        return view('projects.create', compact('types'));
+
+        // Prendo tutte le tecnologie della tabella technologies:
+        $technologies = Technology::all();
+
+        return view('projects.create', compact('types', 'technologies'));
         // potevo scriverlo anche così:
-        // return view('projects.create', ['types' => $types]);
+        // return view('projects.create', ['types' => $types, 'technologies' => $technologies]);
     }
 
     /**
@@ -66,7 +72,20 @@ class ProjectController extends Controller
 
         $newProject->save();    //salvo i nuovi dati nella tabella projects del database
 
-        // Reindirizzo l'utente alla pagina show per vedere il projects che ha salvato ($newPost->id è equivalente a $newPost))
+
+
+        /* DOPO AVER SALVATO IL PROGETTO, E SOLTANTO DOPO PERCHE' A NOI CI SERVE IL DATO DEL PROGETTO SALVATO */
+
+        // PRIMA CONTROLLO SE E' STATO EFFETTIVAMENTE PASSATO QUALCHE VALORE DI TECNOLOGIA E CHE QUINDI L'ARRAY ESISTA:
+        // Avrei potuto inserire anche la seguente condizione: if(isset($data['tecnologie']))
+        if ($request->has('tecnologie')) {
+            // salvo i dati nella tabella Ponte che ha relazione molti a molti tra le tabelle projects e technologies:
+            $newProject->technologies()->attach($data['tecnologie']);   //richiamo il metodo technologies() creato nel Model di Project che crea la relazione molti a molti e con il metodo attach() gli passo l'array dei tags ricevuti dalla request
+        }
+
+
+
+        // Reindirizzo l'utente alla pagina show per vedere il projects che ha salvato ($newproject->id è equivalente a $newproject))
         return redirect()->route("projects.show", $newProject);
     }
 
