@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
 
             // In questa tabella Ponte aggiungo entrambe le chiavi esterne della tabella projects e della tabella technologies (che fanno rispettivamente entrambe riferimento agli id delle due tabelle citate):
-            $table->foreignId('projects_id');
-            $table->foreignId('technologies_id');
+            $table->foreignId('projects_id')->constrained();
+            $table->foreignId('technologies_id')->constrained();
 
             $table->timestamps();
         });

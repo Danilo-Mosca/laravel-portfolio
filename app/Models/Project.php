@@ -15,6 +15,6 @@ class Project extends Model
     // Colleghiamo i progetti e creo la relazione 1 to many (1 a molti) tra la tabella technologies (1) e la tabella projects (molti):
     public function technologies()
     {
-        return $this->belongsTo(Technology::class);
+        return $this->belongsToMany(Technology::class);
     }
 }
