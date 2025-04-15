@@ -36,6 +36,12 @@
                      <a class="nav-link {{ request()->routeIs('types.create') ? 'active' : '' }}"
                          href="{{ route('types.create') }}">Inserisci un tipo di progetto</a>
 
+                     <a class="nav-link {{ request()->routeIs('technologies.index') ? 'active' : '' }}"
+                         href="{{ route('technologies.index') }}">Tecnologie</a>
+
+                     <a class="nav-link {{ request()->routeIs('technologies.create') ? 'active' : '' }}"
+                         href="{{ route('technologies.create') }}">Inserisci una tecnologia</a>
+
                      <a class="nav-link disabled" aria-disabled="true">Disabled</a>
                  </div>
              </div>

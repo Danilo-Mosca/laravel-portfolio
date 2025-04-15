@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
 
             // In questa tabella Ponte aggiungo entrambe le chiavi esterne della tabella projects e della tabella technologies (che fanno rispettivamente entrambe riferimento agli id delle due tabelle citate):
-            $table->foreignId('project_id')->constrained();
-            $table->foreignId('technology_id')->constrained();
+            $table->foreignId('project_id')->constrained()->onDelete('cascade');;   // ->onDelete('cascade'); <----- Per evitare problemi futuri e mantenere il database pulito senza record orfani.
+            $table->foreignId('technology_id')->constrained()->onDelete('cascade');; // ->onDelete('cascade'); <----- Per evitare problemi futuri e mantenere il database pulito senza record orfani.
 
             $table->timestamps();
         });
